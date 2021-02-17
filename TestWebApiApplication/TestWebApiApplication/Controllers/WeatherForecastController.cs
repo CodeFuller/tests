@@ -25,6 +25,9 @@ namespace TestWebApiApplication.Controllers
 		[HttpGet]
 		public IEnumerable<WeatherForecast> Get()
 		{
+			var exception = new InvalidOperationException("Oops!");
+			logger.LogError(exception, "Something is very wrong!");
+
 			logger.LogInformation("Preparing Weather Forecast ...");
 
 			var rng = new Random();

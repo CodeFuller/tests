@@ -1,6 +1,6 @@
 # docker build -t test-web-api-application:latest -f Dockerfile ..
-# docker tag test-web-api-application:latest codefuller/test-web-api-application:latest
-# docker push codefuller/test-web-api-application:latest
+# docker tag test-web-api-application:latest codefuller/test-web-api-application:1
+# docker push codefuller/test-web-api-application:1
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 EXPOSE 80
@@ -8,12 +8,11 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 
 COPY ["TestWebApiApplication/TestWebApiApplication.csproj", "/project/TestWebApiApplication/"]
-COPY ["TestWebApiApplication.sln", "/project/"]
-RUN dotnet restore "/project/TestWebApiApplication.sln"
+RUN dotnet restore "/project/TestWebApiApplication/TestWebApiApplication.csproj"
 
 COPY . "/project/"
 
-RUN dotnet build "/project/TestWebApiApplication.sln" --no-restore -c Release
+RUN dotnet build "/project/TestWebApiApplication/TestWebApiApplication.csproj" --no-restore -c Release
 
 FROM build AS publish
 RUN dotnet publish "/project/TestWebApiApplication/TestWebApiApplication.csproj" --no-restore -c Release -o /app/publish

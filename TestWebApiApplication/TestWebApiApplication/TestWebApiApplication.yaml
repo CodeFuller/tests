@@ -30,6 +30,11 @@ spec:
     spec:
       containers:
         - name: test-web-api-application
-          image: codefuller/test-web-api-application:latest
+          image: codefuller/test-web-api-application:1
           ports:
             - containerPort: 80
+          env:
+          - name: APPINSIGHTS_INSTRUMENTATIONKEY
+            value: "<Fill Me>"
+          - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+            value: "<Fill Me>"
