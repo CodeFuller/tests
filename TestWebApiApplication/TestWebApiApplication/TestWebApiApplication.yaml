@@ -48,7 +48,6 @@ type: Opaque
 metadata:
   name: test-application-insights
 data:
-  testInstrumentationKey: <fill me>
   testConnectionString: <fill me>
 ---
 apiVersion: apps/v1
@@ -69,15 +68,10 @@ spec:
     spec:
       containers:
         - name: test-web-api-application
-          image: codefuller/test-web-api-application:v3
+          image: codefuller/test-web-api-application:1.0.10
           ports:
             - containerPort: 80
           env:
-          - name: APPINSIGHTS_INSTRUMENTATIONKEY
-            valueFrom:
-              secretKeyRef:
-                name: test-application-insights
-                key: testInstrumentationKey
           - name: APPLICATIONINSIGHTS_CONNECTION_STRING
             valueFrom:
               secretKeyRef:
