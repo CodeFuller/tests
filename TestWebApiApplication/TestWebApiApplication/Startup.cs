@@ -1,3 +1,5 @@
+using System;
+using AspNetMonsters.ApplicationInsights.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,12 +10,12 @@ namespace TestWebApiApplication
 {
 	public class Startup
 	{
+		private readonly IConfiguration configuration;
+
 		public Startup(IConfiguration configuration)
 		{
-			Configuration = configuration;
+			this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 		}
-
-		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
@@ -22,6 +24,8 @@ namespace TestWebApiApplication
 
 			services.AddApplicationInsightsTelemetry();
 			services.AddApplicationInsightsKubernetesEnricher();
+
+			services.AddCloudRoleNameInitializer(configuration["applicationInsights:roleName"]);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

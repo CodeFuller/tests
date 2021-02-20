@@ -1,6 +1,6 @@
 # docker build -t test-web-api-application:latest -f Dockerfile ..
-# docker tag test-web-api-application:latest codefuller/test-web-api-application:1
-# docker push codefuller/test-web-api-application:1
+# docker tag test-web-api-application:latest codefuller/test-web-api-application:latest
+# docker push codefuller/test-web-api-application:latest
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 EXPOSE 80

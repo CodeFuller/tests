@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
         - name: test-web-api-application
-          image: codefuller/test-web-api-application:1
+          image: codefuller/test-web-api-application:v2
           ports:
             - containerPort: 80
           env:

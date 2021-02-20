@@ -41,7 +41,12 @@ namespace TestWebApiApplication.Controllers
 
 			logger.LogInformation("Forecast was prepared successfully. First summary is {FirstSummary}", forecast.First().Summary);
 
-			return forecast;
+			var fakeForecast = new WeatherForecast
+			{
+				Summary = "Version 1.0.7",
+			};
+
+			return new[] { fakeForecast }.Union(forecast);
 		}
 	}
 }
