@@ -42,14 +42,6 @@ roleRef:
   name: appinsights-k8s-property-reader
   apiGroup: rbac.authorization.k8s.io
 ---
-apiVersion: v1
-kind: Secret
-type: Opaque
-metadata:
-  name: test-application-insights
-data:
-  testConnectionString: <fill me>
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
