@@ -25,7 +25,7 @@ namespace TestWebApiApplication
 			services.AddApplicationInsightsTelemetry();
 			services.AddApplicationInsightsKubernetesEnricher();
 
-			services.AddCloudRoleNameInitializer(configuration["applicationInsights:roleName"]);
+			services.AddCloudRoleNameInitializer($"Test Web API Application ({VersionHelper.GetVersion()})");
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

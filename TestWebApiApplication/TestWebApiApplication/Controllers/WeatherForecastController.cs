@@ -43,7 +43,7 @@ namespace TestWebApiApplication.Controllers
 
 			var fakeForecast = new WeatherForecast
 			{
-				Summary = "Version 1.0.7",
+				Summary = $"Version {VersionHelper.GetVersion()}",
 			};
 
 			return new[] { fakeForecast }.Union(forecast);

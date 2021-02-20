@@ -1,4 +1,9 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: test-web-api-application
@@ -31,11 +36,20 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: default
-  namespace: default
+  namespace: test
 roleRef:
   kind: ClusterRole
   name: appinsights-k8s-property-reader
   apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: test-application-insights
+data:
+  testInstrumentationKey: <fill me>
+  testConnectionString: <fill me>
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -55,11 +69,17 @@ spec:
     spec:
       containers:
         - name: test-web-api-application
-          image: codefuller/test-web-api-application:v2
+          image: codefuller/test-web-api-application:v3
           ports:
             - containerPort: 80
           env:
           - name: APPINSIGHTS_INSTRUMENTATIONKEY
-            value: "<Fill Me>"
+            valueFrom:
+              secretKeyRef:
+                name: test-application-insights
+                key: testInstrumentationKey
           - name: APPLICATIONINSIGHTS_CONNECTION_STRING
-            value: "<Fill Me>"
+            valueFrom:
+              secretKeyRef:
+                name: test-application-insights
+                key: testConnectionString
