@@ -6,11 +6,25 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-web-api-application
+  name: test-web-api-application-load-balancer
   labels:
     app: test-web-api-application
 spec:
   type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: test-web-api-application
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-web-api-application
+  labels:
+    app: test-web-api-application
+spec:
+  type: ClusterIP
   ports:
   - port: 80
     protocol: TCP
@@ -60,7 +74,7 @@ spec:
     spec:
       containers:
         - name: test-web-api-application
-          image: codefuller/test-web-api-application:1.0.10
+          image: codefuller/test-web-api-application:1.0.11
           ports:
             - containerPort: 80
           env:

@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-http-caller
+  labels:
+    app: test-http-caller
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: test-http-caller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-http-caller
+  labels:
+    app: test-http-caller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-http-caller
+  template:
+    metadata:
+      labels:
+        app: test-http-caller
+    spec:
+      containers:
+        - name: test-http-caller
+          image: codefuller/test-http-caller:1.0.0
+          ports:
+            - containerPort: 80
+          env:
+          - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: test-application-insights
+                key: testConnectionString

@@ -1,8 +1,8 @@
 echo off
 
-docker build -t test-web-api-application:1.0.10 -f Dockerfile .. || goto :error
-docker tag test-web-api-application:1.0.10 codefuller/test-web-api-application:1.0.10 || goto :error
-docker push codefuller/test-web-api-application:1.0.10 || goto :error
+docker build -t test-web-api-application:1.0.11 -f Dockerfile .. || goto :error
+docker tag test-web-api-application:1.0.11 codefuller/test-web-api-application:1.0.11 || goto :error
+docker push codefuller/test-web-api-application:1.0.11 || goto :error
 
 kubectl apply -f TestWebApiApplication.yaml --namespace=test || goto :error
 rem kubectl rollout restart deployment.apps/test-web-api-application || goto :error
