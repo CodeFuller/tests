@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics;
 
-namespace TestWebApiApplication
+namespace TestWebApiApplication.Shared
 {
 	public static class VersionHelper
 	{
-		public static string GetVersion()
+		public static string GetVersion<TAnchor>()
 		{
-			var assembly = typeof(VersionHelper).Assembly.Location;
+			var assembly = typeof(TAnchor).Assembly.Location;
 			var versionInfo = FileVersionInfo.GetVersionInfo(assembly);
 			return versionInfo.ProductVersion;
 		}

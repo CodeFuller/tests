@@ -1,22 +1,34 @@
+using System;
 using AspNetMonsters.ApplicationInsights.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TestWebApiApplication.Shared;
 
-namespace TestWebApiApplication
+namespace TestHttpCaller
 {
 	public class Startup
 	{
-		// This method gets called by the runtime. Use this method to add services to the container.
+		private readonly IConfiguration configuration;
+
+		public Startup(IConfiguration configuration)
+		{
+			this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+		}
+
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.Configure<AppSettings>(configuration);
+
 			services.AddControllers();
+
+			services.AddHttpClient();
 
 			services.AddApplicationInsightsTelemetry();
 			services.AddApplicationInsightsKubernetesEnricher();
-			services.AddCloudRoleNameInitializer($"Test Web API Application ({VersionHelper.GetVersion<Startup>()})");
+			services.AddCloudRoleNameInitializer($"Test Http Caller ({VersionHelper.GetVersion<Startup>()})");
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
