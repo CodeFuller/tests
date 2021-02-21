@@ -28,6 +28,10 @@ spec:
   ports:
   - port: 80
     protocol: TCP
+    name: http
+  - port: 81
+    protocol: TCP
+    name: grpc
   selector:
     app: test-web-api-application
 ---
@@ -74,9 +78,10 @@ spec:
     spec:
       containers:
         - name: test-web-api-application
-          image: codefuller/test-web-api-application:1.0.11
+          image: codefuller/test-web-api-application:1.0.12
           ports:
             - containerPort: 80
+            - containerPort: 81
           env:
           - name: APPLICATIONINSIGHTS_CONNECTION_STRING
             valueFrom:
