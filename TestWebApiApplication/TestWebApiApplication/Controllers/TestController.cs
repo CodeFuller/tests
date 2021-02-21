@@ -25,7 +25,7 @@ namespace TestWebApiApplication.Controllers
 		[HttpGet]
 		public TestResponse Get()
 		{
-			logger.LogInformation("Processing test request ...");
+			logger.LogInformation("Processing test HTTP request ...");
 
 			var httpContext = httpContextAccessor.HttpContext;
 			var requestHeaders = httpContext.Request.Headers

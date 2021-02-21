@@ -1,13 +1,14 @@
-using System;
-using AspNetMonsters.ApplicationInsights.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using AspNetMonsters.ApplicationInsights.AspNetCore;
+using TestWebApiApplication;
 using TestWebApiApplication.Shared;
 
-namespace TestHttpCaller
+namespace TestGrpcCaller
 {
 	public class Startup
 	{
@@ -20,15 +21,19 @@ namespace TestHttpCaller
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.Configure<AppSettings>(configuration);
-
 			services.AddControllers();
 
-			services.AddHttpClient();
+			services.AddGrpcClient<Greeter.GreeterClient>(o =>
+			{
+				var settings = new AppSettings();
+				configuration.Bind(settings);
+
+				o.Address = settings.TestAppUri;
+			});
 
 			services.AddApplicationInsightsTelemetry();
 			services.AddApplicationInsightsKubernetesEnricher();
-			services.AddCloudRoleNameInitializer($"Test Http Caller ({VersionHelper.GetVersion<Startup>()})");
+			services.AddCloudRoleNameInitializer($"Test gRPC Caller ({VersionHelper.GetVersion<Startup>()})");
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

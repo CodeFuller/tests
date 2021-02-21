@@ -40,7 +40,7 @@ namespace TestHttpCaller.Controllers
 
 			return new HttpCallerResponse
 			{
-				Version = $"TestHttpCaller ({VersionHelper.GetVersion<TestController>()})",
+				Version = $"Test HttpCaller ({VersionHelper.GetVersion<TestController>()})",
 				TestResponse = testResponse,
 			};
 		}
