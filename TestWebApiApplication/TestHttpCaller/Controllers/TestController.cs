@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
@@ -34,6 +35,13 @@ namespace TestHttpCaller.Controllers
 		{
 			logger.LogInformation("Executing test HTTP call ...");
 
+			using var testClient = new HttpClient();
+
+			var defaultRequestHeaders = httpClient.DefaultRequestHeaders
+				.Select(x => (Header: x.Key, Values: x.Value))
+				.SelectMany(x => x.Values.Select(y => (Header: x.Header, Value: y)))
+				.ToList();
+
 			var testResponse = await httpClient.GetFromJsonAsync<TestResponse>(settings.TestAppUri, cancellationToken);
 
 			logger.LogInformation("Executed test HTTP call");
@@ -42,6 +50,7 @@ namespace TestHttpCaller.Controllers
 			{
 				Version = $"Test HttpCaller ({VersionHelper.GetVersion<TestController>()})",
 				TestResponse = testResponse,
+				DefaultClientHeaders = defaultRequestHeaders.Select(x => new HttpHeader(x)).ToList(),
 			};
 		}
 	}
