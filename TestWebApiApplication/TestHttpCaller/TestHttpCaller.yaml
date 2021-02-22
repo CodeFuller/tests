@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: test-http-caller
-          image: codefuller/test-http-caller:1.0.0
+          image: codefuller/test-http-caller:1.0.1
           ports:
             - containerPort: 80
           env:

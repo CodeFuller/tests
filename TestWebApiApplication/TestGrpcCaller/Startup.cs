@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Net.Http;
 using AspNetMonsters.ApplicationInsights.AspNetCore;
 using TestWebApiApplication;
 using TestWebApiApplication.Shared;
@@ -23,12 +24,17 @@ namespace TestGrpcCaller
 		{
 			services.AddControllers();
 
-			services.AddGrpcClient<Greeter.GreeterClient>(o =>
+			services.AddGrpcClient<Greeter.GreeterClient>((sp, o) =>
 			{
 				var settings = new AppSettings();
 				configuration.Bind(settings);
 
 				o.Address = settings.TestAppUri;
+
+				o.ChannelOptionsActions.Add(x =>
+				{
+					x.HttpClient = sp.GetRequiredService<HttpClient>();
+				});
 			});
 
 			services.AddApplicationInsightsTelemetry();

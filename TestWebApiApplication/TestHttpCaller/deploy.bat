@@ -1,8 +1,8 @@
 echo off
 
-docker build -t test-http-caller:1.0.0 -f Dockerfile .. || goto :error
-docker tag test-http-caller:1.0.0 codefuller/test-http-caller:1.0.0 || goto :error
-docker push codefuller/test-http-caller:1.0.0 || goto :error
+docker build -t test-http-caller:1.0.1 -f Dockerfile .. || goto :error
+docker tag test-http-caller:1.0.1 codefuller/test-http-caller:1.0.1 || goto :error
+docker push codefuller/test-http-caller:1.0.1 || goto :error
 
 kubectl apply -f TestHttpCaller.yaml --namespace=test || goto :error
 
