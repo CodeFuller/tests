@@ -30,12 +30,8 @@ namespace TestGrpcCaller
 				configuration.Bind(settings);
 
 				o.Address = settings.TestAppUri;
-
-				o.ChannelOptionsActions.Add(x =>
-				{
-					x.HttpClient = sp.GetRequiredService<HttpClient>();
-				});
-			});
+			})
+			.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler());
 
 			services.AddApplicationInsightsTelemetry();
 			services.AddApplicationInsightsKubernetesEnricher();

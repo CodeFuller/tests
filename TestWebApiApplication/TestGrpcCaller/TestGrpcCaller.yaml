@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: test-grpc-caller
-          image: codefuller/test-grpc-caller:1.0.1
+          image: codefuller/test-grpc-caller:1.0.2
           ports:
             - containerPort: 80
           env:
