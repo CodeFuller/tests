@@ -7,7 +7,6 @@ using System;
 using System.Net.Http;
 using AspNetMonsters.ApplicationInsights.AspNetCore;
 using TestWebApiApplication;
-using TestWebApiApplication.Shared;
 
 namespace TestGrpcCaller
 {
@@ -35,7 +34,7 @@ namespace TestGrpcCaller
 
 			services.AddApplicationInsightsTelemetry();
 			services.AddApplicationInsightsKubernetesEnricher();
-			services.AddCloudRoleNameInitializer($"Test gRPC Caller ({VersionHelper.GetVersion<Startup>()})");
+			services.AddCloudRoleNameInitializer("gRPC Client");
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TestWebApiApplication.Services;
-using TestWebApiApplication.Shared;
 
 namespace TestWebApiApplication
 {
@@ -18,7 +17,7 @@ namespace TestWebApiApplication
 
 			services.AddApplicationInsightsTelemetry();
 			services.AddApplicationInsightsKubernetesEnricher();
-			services.AddCloudRoleNameInitializer($"Test Web API Application ({VersionHelper.GetVersion<Startup>()})");
+			services.AddCloudRoleNameInitializer("Server App");
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

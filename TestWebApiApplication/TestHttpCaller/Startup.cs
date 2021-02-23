@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TestWebApiApplication.Shared;
 
 namespace TestHttpCaller
 {
@@ -28,7 +27,7 @@ namespace TestHttpCaller
 
 			services.AddApplicationInsightsTelemetry();
 			services.AddApplicationInsightsKubernetesEnricher();
-			services.AddCloudRoleNameInitializer($"Test Http Caller ({VersionHelper.GetVersion<Startup>()})");
+			services.AddCloudRoleNameInitializer("HTTP Client");
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
