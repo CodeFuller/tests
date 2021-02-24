@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using TestWebApiApplication.Shared;
 using TestWebApiApplication.Shared.Models;
 
 namespace TestWebApiApplication.Controllers
@@ -37,7 +36,7 @@ namespace TestWebApiApplication.Controllers
 
 			return new TestResponse
 			{
-				Version = $"TestWebApiApplication ({VersionHelper.GetVersion<TestController>()})",
+				Version = $"TestWebApiApplication ({VersionHelper.Version})",
 				RequestHeaders = requestHeaders.Select(x => new HttpHeader(x)).ToList(),
 			};
 		}
